@@ -42,4 +42,4 @@ Unlike most of the DOS and probing attacks, there appear to be no sequential pat
 
 Useful algorithms for mining the unstructured data portions of packets automatically are an open research question.  Stolfo et al. used domain knowledge to add features that look for suspicious behavior in the data portions, such as the number of failed login attempts.  These features are called "content" features.  
 
-A complete listing of the set of features defined for the connection records is given in the three tables below.  The data schema of the contest dataset is available in machine-readable form.   
+A complete listing of the set of features defined for the connection records is given in the three tables below.  The data schema of the contest dataset is available in [machine-readable form](http://kdd.ics.uci.edu/databases/kddcup99/kddcup.names).   

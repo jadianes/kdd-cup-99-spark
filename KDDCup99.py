@@ -46,8 +46,10 @@ if __name__ == "__main__":
     # column in each data row
     parsed_data = rawData.map(parseInteraction)
 
+    parsed_data_values = parsed_data.cache()
+    
     # Build the model (cluster the data)
-    clusters = KMeans.train(parsed_data.values(), 10, maxIterations=10,
+    clusters = KMeans.train(parsed_data_values, 10, maxIterations=10,
         runs=10, initializationMode="random")
 
     # Evaluate clustering by computing Within Set Sum of Squared Errors
@@ -55,7 +57,7 @@ if __name__ == "__main__":
         center = clusters.centers[clusters.predict(point)]
         return sqrt(sum([x**2 for x in (point - center)]))
 
-    WSSSE = parsed_data.values().map(lambda point: error(point)).reduce(lambda x, y: x + y)
+    WSSSE = parsed_data_values.map(lambda point: error(point)).reduce(lambda x, y: x + y)
     print("Within Set Sum of Squared Error = " + str(WSSSE))
 
 

@@ -46,8 +46,8 @@ if __name__ == "__main__":
     # column in each data row
     parsed_data = rawData.map(parseInteraction)
 
-    parsed_data_values = parsed_data.cache()
-    
+    parsed_data_values = parsed_data.values().cache()
+
     # Build the model (cluster the data)
     clusters = KMeans.train(parsed_data_values, 10, maxIterations=10,
         runs=10, initializationMode="random")

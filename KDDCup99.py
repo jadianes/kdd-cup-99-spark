@@ -73,7 +73,7 @@ if __name__ == "__main__":
     sorted_cluster_label_count = OrderedDict(sorted(cluster_label_count.items(), key=lambda t: t[0], reverse=True))
 
     # print label counts
-    print("Lebel to cluster assignments:")
+    print("Count of interactions of each user in each cluster:")
     for (cluster,count) in sorted_cluster_label_count.items():
         print cluster[0], cluster[1], count
 

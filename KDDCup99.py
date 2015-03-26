@@ -44,10 +44,10 @@ if __name__ == "__main__":
     # the data contains non-numeric features, we want to exclude them since
     # k-means works with numeric features. These are the first three and the last
     # column in each data row
-    parsedData = rawData.map(parseInteraction)
+    parsed_data = rawData.map(parseInteraction)
 
     # Build the model (cluster the data)
-    clusters = KMeans.train(parsedData.values(), 10, maxIterations=10,
+    clusters = KMeans.train(parsed_data.values(), 10, maxIterations=10,
         runs=10, initializationMode="random")
 
     # Evaluate clustering by computing Within Set Sum of Squared Errors
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         center = clusters.centers[clusters.predict(point)]
         return sqrt(sum([x**2 for x in (point - center)]))
 
-    WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
+    WSSSE = parsed_data.values().map(lambda point: error(point)).reduce(lambda x, y: x + y)
     print("Within Set Sum of Squared Error = " + str(WSSSE))
 
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     def label_point(data):
         cluster = clusters.predict(data[1])
         return (cluster, data[0])
-    cluster_label_count = parsedData.map( label_point ).countByValue()
+    cluster_label_count = parsed_data.map( label_point ).countByValue()
     sorted_cluster_label_count = OrderedDict(sorted(cluster_label_count.items(), key=lambda t: t[0], reverse=True))
 
     # print label counts

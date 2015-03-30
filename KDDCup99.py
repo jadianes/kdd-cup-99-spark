@@ -18,6 +18,28 @@ def parseInteraction(line):
     clean_line_split = [line_split[0]]+line_split[4:-1]
     return (line_split[-1], array([float(x) for x in clean_line_split]))
 
+
+def distance(a, b):
+    """
+    Calculates the euclidean distnace between two numeric RDDs
+    """
+    return math.sqrt(
+        a.zip(b)
+        .map(lambda x: (x[0]-x[1]))
+        .map(lambda x: x*x)
+        .reduce(lambda a,b: a+b)
+        )
+
+
+def dist_to_centroid(datum, model):
+    """
+    Determines the distance of a point to its cluster centroid
+    """
+    cluster = model.predict(datum)
+    centroid = model.clusterCenters(cluster)
+    return distance(centroid, datum)
+
+
 if __name__ == "__main__":
     if (len(sys.argv) != 2):
         print "Usage: /path/to/spark/bin/spark-submit --driver-memory 2g " + \
@@ -33,12 +55,12 @@ if __name__ == "__main__":
     rawData = sc.textFile(sys.argv[1])
 
     # count by all different labels and print them decreasingly
-    users = rawData.map(lambda line: line.strip().split(",")[-1])
-    user_counts = users.countByValue()
-    sorted_users = OrderedDict(sorted(user_counts.items(), key=lambda t: t[1], reverse=True))
-    print "Different users and their interaction counts: "
-    for user, count in sorted_users.items():
-    	print user, count
+    labels = rawData.map(lambda line: line.strip().split(",")[-1])
+    label_counts = labels.countByValue()
+    sorted_labels = OrderedDict(sorted(lebel_counts.items(), key=lambda t: t[1], reverse=True))
+    print "Different labels and their interaction counts: "
+    for label, count in sorted_labels.items():
+    	print label, count
 
     # Prepare data for clustering input
     # the data contains non-numeric features, we want to exclude them since
@@ -73,7 +95,7 @@ if __name__ == "__main__":
     sorted_cluster_label_count = OrderedDict(sorted(cluster_label_count.items(), key=lambda t: t[0], reverse=True))
 
     # print label counts
-    print("Count of interactions of each user in each cluster:")
+    print("Count of interactions of each label in each cluster:")
     for (cluster,count) in sorted_cluster_label_count.items():
         print cluster[0], cluster[1], count
 

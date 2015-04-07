@@ -10,7 +10,7 @@ from numpy import array
 from math import sqrt
 from pyspark.mllib.clustering import KMeans
 
-def parseInteraction(line):
+def parse_interaction(line):
     """
     Parses a network data interaction.
     """
@@ -39,6 +39,9 @@ def dist_to_centroid(datum, model):
     centroid = model.clusterCenters(cluster)
     return distance(centroid, datum)
 
+def clustering_score(data, k):
+    model = KMeans.train(data, k, maxIterations=10, runs=10, initializationMode="random")
+    return data.map(lambda datum: dist_to_centroid(datum, model)).mean()
 
 if __name__ == "__main__":
     if (len(sys.argv) != 2):
@@ -52,10 +55,10 @@ if __name__ == "__main__":
     sc = SparkContext(conf=conf)
 
     # load raw data
-    rawData = sc.textFile(sys.argv[1])
+    raw_data = sc.textFile(sys.argv[1])
 
     # count by all different labels and print them decreasingly
-    labels = rawData.map(lambda line: line.strip().split(",")[-1])
+    labels = raw_data.map(lambda line: line.strip().split(",")[-1])
     label_counts = labels.countByValue()
     sorted_labels = OrderedDict(sorted(lebel_counts.items(), key=lambda t: t[1], reverse=True))
     print "Different labels and their interaction counts: "
@@ -66,36 +69,16 @@ if __name__ == "__main__":
     # the data contains non-numeric features, we want to exclude them since
     # k-means works with numeric features. These are the first three and the last
     # column in each data row
-    parsed_data = rawData.map(parseInteraction)
+    parsed_data = raw_data.map(parse_interaction)
 
     parsed_data_values = parsed_data.values().cache()
 
-    # Build the model (cluster the data)
-    clusters = KMeans.train(parsed_data_values, 10, maxIterations=10,
-        runs=10, initializationMode="random")
+    # Evaluate values of k from 5 to 40
+    scores = range(5,41,5).map(lambda k: return k, clustering_score(parsed_data_values, k))
 
-    # Evaluate clustering by computing Within Set Sum of Squared Errors
-    def error(point):
-        center = clusters.centers[clusters.predict(point)]
-        return sqrt(sum([x**2 for x in (point - center)]))
+    # print scores
+    for score in scores:
+        print score
 
-    WSSSE = parsed_data_values.map(lambda point: error(point)).reduce(lambda x, y: x + y)
-    print("Within Set Sum of Squared Error = " + str(WSSSE))
-
-
-    # print centroids
-    for center in clusters.centers:
-        print center
-
-    # count labels in each cluster
-    def label_point(data):
-        cluster = clusters.predict(data[1])
-        return (cluster, data[0])
-    cluster_label_count = parsed_data.map( label_point ).countByValue()
-    sorted_cluster_label_count = OrderedDict(sorted(cluster_label_count.items(), key=lambda t: t[0], reverse=True))
-
-    # print label counts
-    print("Count of interactions of each label in each cluster:")
-    for (cluster,count) in sorted_cluster_label_count.items():
-        print cluster[0], cluster[1], count
+    
 

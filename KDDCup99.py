@@ -98,12 +98,13 @@ if __name__ == "__main__":
     print "Best k value is %(best_k)d" % {"best_k": min_k}
 
     # Use the best model to assign a cluster to each datum
+    # We use here standardized data - it is more appropriate for exploratory purposes
     print "Obtaining clustering result sample for k=%(min_k)d..." % {"min_k": min_k}
     best_model = min(scores, key=lambda x: x[2])[1]
-    cluster_assignments_sample = parsed_data_values.map(lambda datum: str(best_model.predict(datum))+","+",".join(map(str,datum))).sample(False,0.05)
+    cluster_assignments_sample = standardized_data_values.map(lambda datum: str(best_model.predict(datum))+","+",".join(map(str,datum))).sample(False,0.05)
 
     # Save assignment sample to file
     print "Saving sample to file..."
-    cluster_assignments_sample.saveAsTextFile("sample")
+    cluster_assignments_sample.saveAsTextFile("sample_standardized")
     
     print "DONE!"

@@ -1,5 +1,5 @@
 # read clustering results
-clustering <- read.csv("clustering_results.csv", header=FALSE)
+clustering <- read.csv("clustering_results_standardized.csv", header=FALSE)
 
 # perform PCA
 clustering_pca <- prcomp(clustering)

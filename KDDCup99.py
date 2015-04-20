@@ -3,14 +3,27 @@
 # dataset: http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html
 
 import sys
-from collections import OrderedDict
+import os
 
-from pyspark import SparkConf, SparkContext
+
+# Path for spark source folder
+os.environ['SPARK_HOME']="/path/to/spark"
+
+# Append pyspark  to Python Path
+sys.path.append("/path/to/spark/python")
+
+try:
+    from pyspark import SparkContext, SparkConf
+    from pyspark.mllib.clustering import KMeans
+    from pyspark.mllib.feature import StandardScaler
+    print ("Successfully imported Spark Modules")
+except ImportError as e:
+    print ("Can not import Spark Modules", e)
+    sys.exit(1)
+
+from collections import OrderedDict
 from numpy import array
 from math import sqrt
-from pyspark.mllib.clustering import KMeans
-from pyspark.mllib.feature import StandardScaler
-
 
 def parse_interaction(line):
     """
@@ -23,7 +36,7 @@ def parse_interaction(line):
 
 def distance(a, b):
     """
-    Calculates the euclidean distnace between two numeric RDDs
+    Calculates the euclidean distance between two numeric RDDs
     """
     return sqrt(
         a.zip(b)
@@ -53,7 +66,7 @@ def clustering_score(data, k):
 if __name__ == "__main__":
     if (len(sys.argv) != 3):
         print "Usage: /path/to/spark/bin/spark-submit --driver-memory 2g " + \
-          "KDDCup99.py kddcup.data.file"
+          "KDDCup99.py max_k kddcup.data.file"
         sys.exit(1)
 
     # set up environment
@@ -62,7 +75,7 @@ if __name__ == "__main__":
     conf = SparkConf().setAppName("KDDCup99") \
       #.set("spark.executor.memory", "2g")
     sc = SparkContext(conf=conf)
-    
+
     # load raw data
     print "Loading RAW data..."
     raw_data = sc.textFile(data_file)
@@ -106,5 +119,4 @@ if __name__ == "__main__":
     # Save assignment sample to file
     print "Saving sample to file..."
     cluster_assignments_sample.saveAsTextFile("sample_standardized")
-    
     print "DONE!"

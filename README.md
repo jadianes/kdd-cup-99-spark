@@ -1295,7 +1295,7 @@ process with our kNN. But we still need to assign labels.
 
 ## Using the complete dataset with Spark
 
-The script [KDDCup99.py](kdd-cup-99-spark/KDDCup99.py) runds thorugh a series of steps to perform
+The script [KDDCup99.py](KDDCup99.py) runds thorugh a series of steps to perform
 k-means clustering over the complete dataset using `PySpark`.
 
 The clustering results are stored in a `CSV` file. This file is very convenient

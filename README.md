@@ -5,7 +5,7 @@ This is my try with the *KDD Cup of 1999* using Python, Scikit-learn, and Spark.
 The dataset for this data mining competition can be found
 [here](http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html).
 
-## Taks description summary
+## Task description summary
 
 You can find the complete description of the task
 [here](http://kdd.ics.uci.edu/databases/kddcup99/task.html).
@@ -869,9 +869,9 @@ dimensions with the maximum variance, reducing the information loss.
 Following the idea that new attack types will be similar to known types, let's
 start by trying a k-nearest neighbours classifier. We must to avoid brute force
 comparisons in the Nxd space at all costs. Being N the number of samples in our
-data more than 400K, and d the number of features 38 features, we will end up
-with an unfeasible modeling process. For this reason we pass `algorithm =
-'ball_tree'`. For more on this, se [here](http://scikit-
+data more than 400K, and d the number of features 38, we will end up with an
+unfeasible modeling process. For this reason we pass `algorithm = 'ball_tree'`.
+For more on kNN performance, check [here](http://scikit-
 learn.org/stable/modules/neighbors.html#choice-of-nearest-neighbors-algorithm).
 
 
@@ -880,6 +880,9 @@ learn.org/stable/modules/neighbors.html#choice-of-nearest-neighbors-algorithm).
     clf.fit(features,labels)
     tt = time()-t0
     print "Classifier trained in {} seconds".format(round(tt,3))
+
+    Classifier trained in 2405.17 seconds
+
 
 Now let's try the classifier with the testing data. First we need to load the
 labeled test data. We wil also sample 10 percent of the entries. For that. we
@@ -957,6 +960,1509 @@ Again we select features and scale.
     kdd_data_corrected[num_features] = kdd_data_corrected[num_features].astype(float)
     kdd_data_corrected[num_features].apply(lambda x: MinMaxScaler().fit_transform(x))
 
+
+
+
+<div style="max-height:1000px;max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>duration</th>
+      <th>src_bytes</th>
+      <th>dst_bytes</th>
+      <th>land</th>
+      <th>wrong_fragment</th>
+      <th>urgent</th>
+      <th>hot</th>
+      <th>num_failed_logins</th>
+      <th>logged_in</th>
+      <th>num_compromised</th>
+      <th>...</th>
+      <th>dst_host_count</th>
+      <th>dst_host_srv_count</th>
+      <th>dst_host_same_srv_rate</th>
+      <th>dst_host_diff_srv_rate</th>
+      <th>dst_host_same_src_port_rate</th>
+      <th>dst_host_srv_diff_host_rate</th>
+      <th>dst_host_serror_rate</th>
+      <th>dst_host_srv_serror_rate</th>
+      <th>dst_host_rerror_rate</th>
+      <th>dst_host_srv_rerror_rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>1     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>2     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>3     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>4     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>5     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>6     </th>
+      <td> 0.000000</td>
+      <td> 0.000000</td>
+      <td> 0.000000</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.039216</td>
+      <td> 0.011765</td>
+      <td> 0.30</td>
+      <td> 0.30</td>
+      <td> 0.30</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>7     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.992157</td>
+      <td> 0.99</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>8     </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>9     </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.000036</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.278431</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>10    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>11    </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.000050</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.011765</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.33</td>
+      <td> 0.07</td>
+      <td> 0.33</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>12    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>13    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.988235</td>
+      <td> 0.99</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>14    </th>
+      <td> 0.000017</td>
+      <td> 0.000050</td>
+      <td> 0.000063</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.211765</td>
+      <td> 0.152941</td>
+      <td> 0.72</td>
+      <td> 0.11</td>
+      <td> 0.02</td>
+      <td> 0.00</td>
+      <td> 0.02</td>
+      <td> 0</td>
+      <td> 0.09</td>
+      <td> 0.13</td>
+    </tr>
+    <tr>
+      <th>15    </th>
+      <td> 0.000000</td>
+      <td> 0.000005</td>
+      <td> 0.002650</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.694118</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>16    </th>
+      <td> 0.000000</td>
+      <td> 0.000005</td>
+      <td> 0.000681</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.733333</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>17    </th>
+      <td> 0.000000</td>
+      <td> 0.000005</td>
+      <td> 0.000145</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.768627</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>18    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>19    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>20    </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.001775</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.227451</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.02</td>
+      <td> 0.05</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>21    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.992157</td>
+      <td> 0.99</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>22    </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.000036</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>23    </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.001699</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>24    </th>
+      <td> 0.000000</td>
+      <td> 0.000004</td>
+      <td> 0.003760</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>25    </th>
+      <td> 0.000000</td>
+      <td> 0.000012</td>
+      <td> 0.000000</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.301961</td>
+      <td> 0.129412</td>
+      <td> 0.34</td>
+      <td> 0.08</td>
+      <td> 0.34</td>
+      <td> 0.06</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>26    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>27    </th>
+      <td> 0.000000</td>
+      <td> 0.000560</td>
+      <td> 0.000000</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.360784</td>
+      <td> 0.172549</td>
+      <td> 0.43</td>
+      <td> 0.07</td>
+      <td> 0.43</td>
+      <td> 0.05</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>28    </th>
+      <td> 0.000000</td>
+      <td> 0.000133</td>
+      <td> 0.000000</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 0.403922</td>
+      <td> 0.211765</td>
+      <td> 0.49</td>
+      <td> 0.06</td>
+      <td> 0.49</td>
+      <td> 0.04</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>29    </th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>310999</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311000</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 0.996078</td>
+      <td> 1.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311001</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311002</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311003</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311004</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311005</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311006</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311007</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311008</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311009</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311010</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311011</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311012</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311013</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311014</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311015</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311016</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311017</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311018</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311019</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311020</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311021</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311022</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311023</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000020</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311024</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311025</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311026</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311027</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+    <tr>
+      <th>311028</th>
+      <td> 0.000000</td>
+      <td> 0.000002</td>
+      <td> 0.000028</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1.000000</td>
+      <td> 1.000000</td>
+      <td> 1.00</td>
+      <td> 0.00</td>
+      <td> 0.01</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+      <td> 0</td>
+      <td> 0.00</td>
+      <td> 0.00</td>
+    </tr>
+  </tbody>
+</table>
+<p>311029 rows × 38 columns</p>
+</div>
+
+
+
 Now we can sample the 10 percent of the test data (after we scale it). Although
 we also get training data, we don't need it in this case.
 
@@ -977,7 +2483,7 @@ make predictions.
     tt = time() - t0
     print "Predicted in {} seconds".format(round(tt,3))
 
-    Predicted in 282.116 seconds
+    Predicted in 902.673 seconds
 
 
 That took a lot of time. Actually, the more training data we use with a k-means
@@ -992,7 +2498,7 @@ And finally, calculate the R squared value using the test labels.
     acc = accuracy_score(pred, labels_test)
     print "R squared is {}.".format(round(acc,4))
 
-    R squared is 0.801.
+    R squared is 0.8202.
 
 
 ## Clustering
@@ -1018,10 +2524,10 @@ will be considered anomalous and therefore a possible attack.
     tt = time()-t0
     print "Clustered in {} seconds".format(round(tt,3))
 
-    Clustered in 315.355 seconds
+    Clustered in 331.394 seconds
 
 
-Check cluster sizes.
+Now we can check cluster sizes.
 
 
     pandas.Series(km.labels_).value_counts()
@@ -1029,36 +2535,36 @@ Check cluster sizes.
 
 
 
-    0     280476
-    1      48557
-    11     38322
-    4      23822
-    13     19492
-    7      11466
-    3      10467
-    29     10083
-    26      9320
-    19      5030
-    5       4277
-    2       3933
-    9       3577
-    17      3341
-    8       2923
-    25      2583
-    22      2407
-    20      1886
-    10      1728
-    21      1375
-    18      1297
-    12      1221
-    23      1184
-    15       995
-    6        978
-    16       970
-    14       874
-    24       680
-    27       581
-    28       176
+    0     262807
+    1      48555
+    15     38319
+    5      24427
+    3      20528
+    12     19508
+    28     17879
+    8      11524
+    26      9162
+    7       4941
+    17      4272
+    10      4215
+    25      3996
+    13      3513
+    2       2845
+    29      1951
+    11      1686
+    4       1640
+    24      1557
+    9       1341
+    14      1239
+    16      1230
+    6       1201
+    21      1116
+    18      1020
+    19       970
+    23       949
+    27       775
+    20       680
+    22       175
     dtype: int64
 
 
@@ -1077,128 +2583,53 @@ Print labels for each cluster.
     for i in range(k):
         print "Cluster {} labels:".format(i)
         print label_names[i].value_counts()
+        print
 
     Cluster 0 labels:
-    smurf.     280455
-    normal.        21
+    smurf.     262805
+    normal.         2
     dtype: int64
+    
     Cluster 1 labels:
-    neptune.      48553
+    neptune.      48551
     portsweep.        4
     dtype: int64
+    
     Cluster 2 labels:
-    normal.             3453
-    back.                460
-    buffer_overflow.      14
-    loadmodule.            2
-    ftp_write.             2
-    guess_passwd.          1
-    warezclient.           1
+    normal.    2845
     dtype: int64
+    
     Cluster 3 labels:
-    neptune.      10397
-    portsweep.       54
-    satan.           13
-    normal.           3
+    neptune.      20456
+    portsweep.       58
+    satan.           10
+    normal.           4
     dtype: int64
+    
     Cluster 4 labels:
-    normal.    22570
-    back.       1248
+    normal.      1510
+    pod.           60
+    smurf.         36
+    satan.         22
+    teardrop.       7
+    rootkit.        3
+    spy.            1
+    nmap.           1
+    dtype: int64
+    
+    Cluster 5 labels:
+    normal.    23165
+    back.       1258
     phf.           3
     satan.         1
     dtype: int64
-    Cluster 5 labels:
-    normal.       4243
-    satan.          25
-    portsweep.       9
-    dtype: int64
+    
     Cluster 6 labels:
-    normal.     975
-    ipsweep.      3
+    normal.    1201
     dtype: int64
+    
     Cluster 7 labels:
-    normal.    11466
-    dtype: int64
-    Cluster 8 labels:
-    normal.    2923
-    dtype: int64
-    Cluster 9 labels:
-    normal.         3562
-    back.             14
-    warezclient.       1
-    dtype: int64
-    Cluster 10 labels:
-    normal.          1347
-    ipsweep.          255
-    pod.               65
-    warezmaster.       18
-    nmap.              17
-    imap.              10
-    smurf.              3
-    land.               3
-    ftp_write.          2
-    rootkit.            2
-    multihop.           2
-    neptune.            1
-    loadmodule.         1
-    guess_passwd.       1
-    portsweep.          1
-    dtype: int64
-    Cluster 11 labels:
-    neptune.         38189
-    nmap.              103
-    portsweep.          19
-    normal.              7
-    land.                2
-    guess_passwd.        1
-    imap.                1
-    dtype: int64
-    Cluster 12 labels:
-    satan.        1219
-    portsweep.       2
-    dtype: int64
-    Cluster 13 labels:
-    normal.    19492
-    dtype: int64
-    Cluster 14 labels:
-    normal.          803
-    guess_passwd.     50
-    portsweep.        10
-    back.              8
-    ipsweep.           2
-    neptune.           1
-    dtype: int64
-    Cluster 15 labels:
-    portsweep.    913
-    ipsweep.       81
-    normal.         1
-    dtype: int64
-    Cluster 16 labels:
-    teardrop.    970
-    dtype: int64
-    Cluster 17 labels:
-    normal.      3172
-    pod.           83
-    smurf.         39
-    satan.         23
-    teardrop.       8
-    ipsweep.        6
-    nmap.           4
-    rootkit.        3
-    land.           1
-    spy.            1
-    neptune.        1
-    dtype: int64
-    Cluster 18 labels:
-    ipsweep.     898
-    normal.      169
-    pod.         116
-    nmap.         99
-    land.         14
-    multihop.      1
-    dtype: int64
-    Cluster 19 labels:
-    normal.         4962
+    normal.         4873
     warezclient.      52
     rootkit.           4
     satan.             4
@@ -1208,58 +2639,168 @@ Print labels for each cluster.
     spy.               1
     imap.              1
     dtype: int64
-    Cluster 20 labels:
-    normal.             1195
-    warezclient.         660
-    buffer_overflow.      16
-    loadmodule.            5
-    ftp_write.             4
-    back.                  3
-    multihop.              2
-    rootkit.               1
+    
+    Cluster 8 labels:
+    normal.    11424
+    smurf.        98
+    nmap.          2
     dtype: int64
-    Cluster 21 labels:
-    normal.       1262
-    satan.         111
+    
+    Cluster 9 labels:
+    normal.       1230
+    satan.         109
     teardrop.        1
     portsweep.       1
     dtype: int64
-    Cluster 22 labels:
-    normal.    2407
+    
+    Cluster 10 labels:
+    normal.          4153
+    guess_passwd.      49
+    back.               7
+    ipsweep.            3
+    portsweep.          2
+    neptune.            1
     dtype: int64
-    Cluster 23 labels:
-    normal.    1184
+    
+    Cluster 11 labels:
+    normal.          1177
+    ipsweep.          339
+    pod.               94
+    nmap.              22
+    warezmaster.       18
+    satan.             12
+    imap.               8
+    smurf.              3
+    land.               3
+    ftp_write.          2
+    rootkit.            2
+    guess_passwd.       2
+    multihop.           2
+    loadmodule.         1
+    portsweep.          1
     dtype: int64
-    Cluster 24 labels:
+    
+    Cluster 12 labels:
+    normal.    19508
+    dtype: int64
+    
+    Cluster 13 labels:
+    normal.         3500
+    back.             12
+    warezclient.       1
+    dtype: int64
+    
+    Cluster 14 labels:
+    warezclient.        661
+    normal.             537
+    buffer_overflow.     22
+    ftp_write.            6
+    back.                 5
+    loadmodule.           5
+    multihop.             2
+    rootkit.              1
+    dtype: int64
+    
+    Cluster 15 labels:
+    neptune.         38189
+    nmap.              103
+    portsweep.          19
+    normal.              6
+    land.                1
+    guess_passwd.        1
+    dtype: int64
+    
+    Cluster 16 labels:
+    satan.        1222
+    portsweep.       8
+    dtype: int64
+    
+    Cluster 17 labels:
+    normal.       4237
+    satan.          26
+    portsweep.       9
+    dtype: int64
+    
+    Cluster 18 labels:
+    portsweep.    934
+    ipsweep.       83
+    normal.         3
+    dtype: int64
+    
+    Cluster 19 labels:
+    teardrop.    970
+    dtype: int64
+    
+    Cluster 20 labels:
     normal.         370
     warezclient.    306
     multihop.         2
     warezmaster.      2
     dtype: int64
-    Cluster 25 labels:
-    normal.    2187
-    back.       395
-    phf.          1
+    
+    Cluster 21 labels:
+    ipsweep.     813
+    normal.      118
+    nmap.         99
+    pod.          71
+    land.         14
+    multihop.      1
     dtype: int64
-    Cluster 26 labels:
-    normal.    9245
-    back.        75
-    dtype: int64
-    Cluster 27 labels:
-    smurf.     293
-    normal.    259
-    satan.      21
-    nmap.        8
-    dtype: int64
-    Cluster 28 labels:
+    
+    Cluster 22 labels:
     satan.        172
     portsweep.      3
-    land.           1
     dtype: int64
+    
+    Cluster 23 labels:
+    normal.    949
+    dtype: int64
+    
+    Cluster 24 labels:
+    normal.       1497
+    pod.            29
+    smurf.           7
+    ipsweep.         7
+    satan.           6
+    nmap.            4
+    imap.            3
+    neptune.         2
+    teardrop.        1
+    portsweep.       1
+    dtype: int64
+    
+    Cluster 25 labels:
+    normal.             3521
+    back.                464
+    buffer_overflow.       8
+    loadmodule.            2
+    guess_passwd.          1
+    dtype: int64
+    
+    Cluster 26 labels:
+    normal.    9091
+    back.        71
+    dtype: int64
+    
+    Cluster 27 labels:
+    normal.     760
+    pod.         10
+    land.         3
+    neptune.      2
+    dtype: int64
+    
+    Cluster 28 labels:
+    smurf.     17841
+    normal.       33
+    satan.         5
+    dtype: int64
+    
     Cluster 29 labels:
-    neptune.      10059
-    portsweep.       24
+    normal.    1564
+    back.       386
+    phf.          1
     dtype: int64
+    
 
 
 We can see how, in most of them, there is a dominant label. It would be
@@ -1278,7 +2819,7 @@ We can now predict using our test data.
     tt = time() - t0
     print "Assigned clusters in {} seconds".format(round(tt,3))
 
-    Assigned clusters in 0.698 seconds
+    Assigned clusters in 0.693 seconds
 
 
 We can see that the assignment process is much faster than the prediction
@@ -1295,8 +2836,7 @@ process with our kNN. But we still need to assign labels.
 
 ## Using the complete dataset with Spark
 
-The script [KDDCup99.py](https://github.com/jadianes/kdd-
-cup-99-spark/blob/master/KDDCup99.py) runds thorugh a series of steps to perform
+The script [KDDCup99.py](KDDCup99.py) runds thorugh a series of steps to perform
 k-means clustering over the complete dataset using `PySpark`.
 
 The clustering results are stored in a `CSV` file. This file is very convenient

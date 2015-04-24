@@ -2811,6 +2811,11 @@ are split between different clusters (some with more dominance than others). All
 that would help us understand each type of attack! This is also a benefit of
 using a clustering-based approach.
 
+#### TODO:
+- Get dominant labels
+- Analyse cluster centers, specially for heterogeneous clusters containing
+`normal`. This will discover conflictive interactions.
+
 ### Predictions
 
 We can now predict using our test data.

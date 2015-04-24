@@ -2846,7 +2846,8 @@ results of the complete dataset using `Scikit-learn`.
 The following chart depicts the **first two pincipal components** for the
 clustering results.
 
-![](https://raw.githubusercontent.com/jadianes/kdd-cup-99-spark/master/clusters.png)
+![](https://github.com/jadianes/kdd-
+cup-99-spark/blob/master/clusters.png?raw=true)
 
 Remember that we have up to 24 different labels in our complete dataset. However
 we have generated up to 80 different clusters. As a result of this, some of the

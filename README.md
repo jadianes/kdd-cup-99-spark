@@ -2803,7 +2803,9 @@ Print labels for each cluster.
     
 
 
-We can see how, in most of them, there is a dominant label. It would be
+### Cluster description  
+
+We can see that, in most clusters, there is a dominant label. It would be
 interesting to go cluster by cluster and analyise mayority labels, or how labels
 are split between different clusters (some with more dominance than others). All
 that would help us understand each type of attack! This is also a benefit of

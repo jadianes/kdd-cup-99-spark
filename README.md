@@ -5,7 +5,7 @@ This is my try with the *KDD Cup of 1999* using Python, Scikit-learn, and Spark.
 The dataset for this data mining competition can be found
 [here](http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html).
 
-## Taks description summary
+## Task description summary
 
 You can find the complete description of the task
 [here](http://kdd.ics.uci.edu/databases/kddcup99/task.html).

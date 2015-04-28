@@ -2843,8 +2843,9 @@ process with our kNN. But we still need to assign labels.
 
 ## Using the complete dataset with Spark
 
-The script [KDDCup99.py](KDDCup99.py) runds thorugh a series of steps to perform
-k-means clustering over the complete dataset using `PySpark`.
+The script [KDDCup99.py](KDDCup99.py) runds through a series of steps to perform
+k-means clustering over the complete dataset using `PySpark` with different K
+values in order to find the best one.
 
 The clustering results are stored in a `CSV` file. This file is very convenient
 for visualisation purposes. It would be very hard to cluster and visualise
@@ -2862,6 +2863,133 @@ variability of interactions for a given type of attack (or label).
 
 
     # TODO: follow the same approach for label assignment in the test data as before
+
+### Clustering using Spark
+
+In order to show how we use `Spark` to do k-means clustering in our dataset,
+let's perform here a single clustering run with the complete dataset, for a K
+value of 80 that showed to be particulary good.
+
+
+    # Some imports we will use
+    from collections import OrderedDict
+    from time import time
+
+First we need to load the data, using the complete dataset file stored in NFS.
+
+
+    data_file = "/nfs/data/KDD99/kddcup.data"
+    raw_data = sc.textFile(data_file)
+
+As a warm up, let's count the number of interactions by label.
+
+
+    # count by all different labels and print them decreasingly
+    print "Counting all different labels"
+    labels = raw_data.map(lambda line: line.strip().split(",")[-1])
+    
+    t0 = time()
+    label_counts = labels.countByValue()
+    tt = time()-t0
+    
+    sorted_labels = OrderedDict(sorted(label_counts.items(), key=lambda t: t[1], reverse=True))
+    for label, count in sorted_labels.items():
+        print label, count
+        
+    print "Counted in {} seconds".format(round(tt,3))
+
+    Counting all different labels
+    smurf. 2807886
+    neptune. 1072017
+    normal. 972781
+    satan. 15892
+    ipsweep. 12481
+    portsweep. 10413
+    nmap. 2316
+    back. 2203
+    warezclient. 1020
+    teardrop. 979
+    pod. 264
+    guess_passwd. 53
+    buffer_overflow. 30
+    land. 21
+    warezmaster. 20
+    imap. 12
+    rootkit. 10
+    loadmodule. 9
+    ftp_write. 8
+    multihop. 7
+    phf. 4
+    perl. 3
+    spy. 2
+    Counted in 9.12 seconds
+
+
+Now we prepare the data for clustering input. The data contains non-numeric
+features, and we want to exclude them since k-means works just with numeric
+features. These are the first three and the last column in each data row that is
+the label.
+In order to do that, we define a function that we apply to the *RDD* as a
+`Spark` **transformation** by using `map`. The **action** that actually
+retrieves the data is `values`. Remember that we can apply as many
+transofmrations as we want without making `Spark` start any processing. Is is
+when we trigger an action when all the transformations are applied.
+
+
+    def parse_interaction(line):
+        """
+        Parses a network data interaction.
+        """
+        line_split = line.split(",")
+        clean_line_split = [line_split[0]]+line_split[4:-1]
+        return (line_split[-1], array([float(x) for x in clean_line_split]))
+    
+    parsed_data = raw_data.map(parse_interaction)
+    t0 = time()
+    parsed_data_values = parsed_data.values().cache()
+    tt = time() - t0
+    print "Data parsed in {} seconds".format(round(tt,3))
+
+    Data parsed in 0.015 seconds
+
+
+Additionally, we have used `cache` in order to keep the results at hand.
+Actually the parsing time we see here is because of the caching mechanism and
+the fact that we have executed that piece more than once.
+
+We will also standardise our data as we have done so far when performing
+distance-based clustering.
+
+
+    from pyspark.mllib.feature import StandardScaler
+    standardizer = StandardScaler(True, True)
+    t0 = time()
+    standardizer_model = standardizer.fit(parsed_data_values)
+    tt = time() - t0
+    standardized_data_values = standardizer_model.transform(parsed_data_values)
+    print "Data standardized in {} seconds".format(round(tt,3))
+
+    Data standardized in 9.54 seconds
+
+
+We can now perform k-means clustering.
+
+
+    from pyspark.mllib.clustering import KMeans
+    t0 = time()
+    clusters = KMeans.train(standardized_data_values, 80, 
+                            maxIterations=10, runs=5, 
+                            initializationMode="random")
+    tt = time() - t0
+    print "Data clustered in {} seconds".format(round(tt,3))
+
+    Data clustered in 137.496 seconds
+
+
+Once we have our clusters, we can use them to label test data and test accuracy.
+
+
+    # TODO
 
 
     

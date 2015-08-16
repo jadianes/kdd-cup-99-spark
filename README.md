@@ -2930,8 +2930,7 @@ features, and we want to exclude them since k-means works just with numeric
 features. These are the first three and the last column in each data row that is
 the label.
 In order to do that, we define a function that we apply to the *RDD* as a
-`Spark` **transformation** by using `map`. The **action** that actually
-retrieves the data is `values`. Remember that we can apply as many
+`Spark` **transformation** by using `map`. Remember that we can apply as many
 transofmrations as we want without making `Spark` start any processing. Is is
 when we trigger an action when all the transformations are applied.
 
@@ -2945,17 +2944,12 @@ when we trigger an action when all the transformations are applied.
         return (line_split[-1], array([float(x) for x in clean_line_split]))
     
     parsed_data = raw_data.map(parse_interaction)
-    t0 = time()
     parsed_data_values = parsed_data.values().cache()
-    tt = time() - t0
-    print "Data parsed in {} seconds".format(round(tt,3))
-
-    Data parsed in 0.015 seconds
 
 
-Additionally, we have used `cache` in order to keep the results at hand.
-Actually the parsing time we see here is because of the caching mechanism and
-the fact that we have executed that piece more than once.
+
+Additionally, we have used `cache` in order to keep the results at hand 
+once they are calculated by the first action.
 
 We will also standardise our data as we have done so far when performing
 distance-based clustering.

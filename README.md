@@ -2866,6 +2866,9 @@ variability of interactions for a given type of attack (or label).
 
 ### Clustering using Spark
 
+*Note: in the following we have used a 7-node Spark cluster, with 512Mb and 2 cores
+per node.*  
+
 In order to show how we use `Spark` to do k-means clustering in our dataset,
 let's perform here a single clustering run with the complete dataset, for a K
 value of 80 that showed to be particulary good.
